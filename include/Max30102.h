@@ -10,6 +10,6 @@ struct HeartRateSensor {
 };
 
 HeartRateSensor heart_and_spo2_sensor();
-void initSensor();
+void initMAXSensor();
  
 
