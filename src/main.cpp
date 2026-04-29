@@ -1,31 +1,15 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "MAX30102.h"
+#include "GSR.h"
 
-// const byte RATE_SIZE = 4;
-// byte rates[RATE_SIZE];
-// byte rateSpot = 0;
-// long lastBeat = 0;
-
-// float beatsPerMinute;
-// int beatAvg;
-// int btnState = 0;
-
-// SP02 setup
-// static uint32_t irBuffer[100];
-// static uint32_t redBuffer[100];
-// static int32_t spo2;
-// static int8_t validSPO2;
-// static int32_t heartRate;
-// static int8_t validHeartRate;
-// static byte pulseLED = 11;
-// static byte readLED = 13;
-
+int baseline;
 void setup()
 {
   Serial.begin(115200);
+  baseline = calibrate();
   Serial.println("Initializing...");
-  initSensor();
+  initMAXSensor(); //hr and spo2 sensor
 }
 
 void loop()
@@ -52,6 +36,7 @@ void loop()
 
   delay(500);
   // TODO: ADD GSR
+  readGSR(baseline);
   // TODO: ADD Temp DS18b20
   // TODO: ADD json payload
 }

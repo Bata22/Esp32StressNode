@@ -7,7 +7,7 @@ HeartRateSensor sensor;
     uint32_t irBuffer[100];
     uint32_t redBuffer[100]; 
 
-void initSensor(){
+void initMAXSensor(){
       // Inicialisation sensor
   if (!sensorLib.begin(Wire, I2C_SPEED_FAST)) // Use I2C port, f = 400kHz
   {
