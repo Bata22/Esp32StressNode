@@ -1,3 +1,3 @@
 
 int calibrateGSR();
-void readGSR(int baseline);
+int readGSR(int baseline);

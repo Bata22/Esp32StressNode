@@ -16,7 +16,7 @@ int calibrateGSR() // for 30 s on 5ms sample
 }
   
 
-void readGSR(int baseline)
+int readGSR(int baseline)
 {
   int sensorValue = 0;
   int gsrAverage = 0;
@@ -48,6 +48,7 @@ void readGSR(int baseline)
 
   Serial.print("Covekova otpornost ");
   Serial.println(humanResistance);
+  return gsr_10bit;
 }
 
 

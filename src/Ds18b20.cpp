@@ -17,7 +17,7 @@ void initDS18B20()
     // Start the DS18B20 sensor
     sensors.begin();
 }
-void temperatureDS18B20()
+float temperatureDS18B20()
 {
     sensors.requestTemperatures();
     float temperatureC = sensors.getTempCByIndex(0);
@@ -25,4 +25,5 @@ void temperatureDS18B20()
     Serial.print(temperatureC);
     Serial.println("ºC");
     
+    return temperatureC;
 }
