@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #define GSRSonde 35
 
-int calibrate() // for 30 s on 5ms sample
+int calibrateGSR() // for 30 s on 5ms sample
 {
   int sensorValue = 0;
   long sum = 0;

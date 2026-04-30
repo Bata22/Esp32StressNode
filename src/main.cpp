@@ -2,14 +2,16 @@
 #include <Wire.h>
 #include "MAX30102.h"
 #include "GSR.h"
+#include "Ds18b20.h"
 
 int baseline;
 void setup()
 {
   Serial.begin(115200);
-  baseline = calibrate();
+  baseline = calibrateGSR();
   Serial.println("Initializing...");
-  initMAXSensor(); //hr and spo2 sensor
+  initMAXSensor(); // hr and spo2 sensor
+  initDS18B20();
 }
 
 void loop()
@@ -33,10 +35,9 @@ void loop()
     Serial.print(" |Valid= ");
     Serial.println(result.validHeartRate);
   }
-
   delay(500);
-  // TODO: ADD GSR
   readGSR(baseline);
-  // TODO: ADD Temp DS18b20
+  delay(100);
+  temperatureDS18B20();
   // TODO: ADD json payload
 }
