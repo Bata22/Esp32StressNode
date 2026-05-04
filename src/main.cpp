@@ -29,7 +29,7 @@ void setup()
 
 void loop()
 {
-  //Set Timestamp
+  // Set Timestamp
   now = time(NULL);
   connectMqtt();
 
@@ -57,8 +57,11 @@ void loop()
   delay(100);
   temperatureC_DS10B20 = temperatureDS18B20();
   // TODO: ADD json payload
-  payloadJson = NodePayload(now, resultsMax.heartRate, resultsMax.spo2, GSR, temperatureC_DS10B20);
+  if (resultsMax.validHeartRate == 1 && resultsMax.validSpo2 == 1 && resultsMax.heartRate > 40 && resultsMax.spo2 > 70)
+  {
+    payloadJson = NodePayload(now, resultsMax.heartRate, resultsMax.spo2, GSR, temperatureC_DS10B20);
+    publishNode(payloadJson);
+  }
 
-  publishNode(payloadJson);
+  
 }
-

@@ -39,11 +39,12 @@ void reconnectMqtt()
         }
     }
 }
-
+// NAJVISE MI MIRISE DA OVO JEBE PROGRAM
 void publishNode(String nodePayload)
 {
-    client.publish("api/esp32/node", nodePayload.c_str());
-    if (!client.publish("api/esp32/node", nodePayload.c_str())) {
-    Serial.println("Publish failed");
-}
+    client.publish("api/V1/esp32/node", nodePayload.c_str());
+    if (!client.publish("api/V1/esp32/node", nodePayload.c_str()))
+    {
+        Serial.println("Publish failed");
+    }
 }
