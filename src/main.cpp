@@ -5,16 +5,22 @@
 #include "Ds18b20.h"
 #include <ArduinoJson.h>
 #include <time.h>
+#include "NodePayload.h"
+#include "WifiMine.h"
+#include "MQTT.h"
 
 time_t now;
 HeartRateSensor resultsMax;
 int baseline;
 int GSR;
 float temperatureC_DS10B20;
-void NodePayload();
+String payloadJson;
+
 void setup()
 {
   Serial.begin(115200);
+  setup_wifi();
+  initMqtt();
   baseline = calibrateGSR();
   Serial.println("Initializing...");
   initMAXSensor(); // hr and spo2 sensor
@@ -23,8 +29,10 @@ void setup()
 
 void loop()
 {
-  //Set Time stamp
+  // Set Timestamp
   now = time(NULL);
+  connectMqtt();
+
   // Monitoring HR and spo2 max
   resultsMax = heart_and_spo2_sensor();
 
@@ -49,25 +57,11 @@ void loop()
   delay(100);
   temperatureC_DS10B20 = temperatureDS18B20();
   // TODO: ADD json payload
-  NodePayload();
-}
-
-void NodePayload() {
-  JsonDocument jsonDoc; //StaticJsonDocument<200>
-  //TODO: dynamic NODEID when i have more nodes
-  jsonDoc["NodeID"] = "01-ESP32";
-  //TODO: NTP sync when gateway available
-  jsonDoc["TimeStamp"] = (uint32_t)now;
-  JsonObject sensorData = jsonDoc["sensorData"].to<JsonObject>();
-  sensorData["HeartRate"] = resultsMax.heartRate;
-  sensorData["SpO2"] = resultsMax.spo2;
-  sensorData["GSR"] =  GSR;
-  sensorData["Temperature"] = temperatureC_DS10B20;
-  //TODO: dynamic cheks for sensor response and do concatenation stings
-  jsonDoc["ErrorMessage"] = "RADI"; 
-
-     String response;
-  serializeJson(jsonDoc, response);
-  //TODO: Send to mqtt broker
-  Serial.println(response);
+  if (resultsMax.validHeartRate == 1 && resultsMax.validSpo2 == 1 && resultsMax.heartRate > 40 && resultsMax.spo2 > 70)
+  {
+    payloadJson = NodePayload(now, resultsMax.heartRate, resultsMax.spo2, GSR, temperatureC_DS10B20);
+    publishNode(payloadJson);
   }
+
+  
+}

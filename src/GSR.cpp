@@ -5,7 +5,7 @@ int calibrateGSR() // for 30 s on 5ms sample
 {
   int sensorValue = 0;
   long sum = 0;
-  for (int i = 0; i < 6000; i++)
+  for (int i = 0; i < 6000; i++) 
   {
     sensorValue = analogRead(GSRSonde);
     sum += sensorValue;
