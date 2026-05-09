@@ -11,6 +11,7 @@
 
 time_t now;
 HeartRateSensor resultsMax;
+
 int baseline;
 int GSR;
 float temperatureC_DS10B20;
@@ -32,10 +33,10 @@ void loop()
   // Set Timestamp
   now = time(NULL);
   connectMqtt();
-
+unsigned long MaxTrajanje = millis();
   // Monitoring HR and spo2 max
   resultsMax = heart_and_spo2_sensor();
-
+Serial.print(millis() - MaxTrajanje);
   // Print results
   if (resultsMax.spo2 > 70 && resultsMax.validSpo2 == 1)
   {
@@ -57,11 +58,10 @@ void loop()
   delay(100);
   temperatureC_DS10B20 = temperatureDS18B20();
   // TODO: ADD json payload
-  if (resultsMax.validHeartRate == 1 && resultsMax.validSpo2 == 1 && resultsMax.heartRate > 40 && resultsMax.spo2 > 70)
-  {
-    payloadJson = NodePayload(now, resultsMax.heartRate, resultsMax.spo2, GSR, temperatureC_DS10B20);
-    publishNode(payloadJson);
-  }
+  // if (resultsMax.validHeartRate == 1 && resultsMax.validSpo2 == 1 && resultsMax.heartRate > 40 && resultsMax.spo2 > 70)
+  // {
 
-  
+  // }
+  payloadJson = NodePayload(now, resultsMax.heartRate, resultsMax.spo2, resultsMax.validHeartRate, resultsMax.validSpo2, connectedMax30102, GSR, conncetedGSR, temperatureC_DS10B20, connectedDs18b20);
+  publishNode(payloadJson);
 }

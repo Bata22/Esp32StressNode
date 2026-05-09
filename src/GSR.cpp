@@ -1,20 +1,47 @@
 #include <Arduino.h>
 #define GSRSonde 35
 
+int8_t conncetedGSR;
 int calibrateGSR() // for 30 s on 5ms sample
 {
   int sensorValue = 0;
+  int sensorValueArray[20];
   long sum = 0;
-  for (int i = 0; i < 6000; i++) 
+  for (byte i = 0; i < 20; i++)
   {
     sensorValue = analogRead(GSRSonde);
-    sum += sensorValue;
+    sensorValueArray[i] = sensorValue;
+  }
+  for (byte i = 0 ; i < 19; i++)
+  {
+    if (sensorValue == 0)
+    {
+      conncetedGSR = 0;
+      break;
+    }
+    if ((sensorValueArray[i + 1]) - sensorValueArray[i] > 400)
+    {
+      conncetedGSR = 0;
+      break;
+    }
+    else
+    {
+      conncetedGSR = 1;
+    }
+  }
+  if (conncetedGSR == 1)
+  {
+    for (int16_t i = 0; i < 6000; i++)
+    {
+      sensorValue = analogRead(GSRSonde);
+      // printf("sensorValue %d", sensorValue); Check what value you get from sensors
+      sum += sensorValue;
 
-    delay(5);
+      delay(5);
+    }
   }
   return sum / 6000;
 }
-  
 
 int readGSR(int baseline)
 {
@@ -22,12 +49,16 @@ int readGSR(int baseline)
   int gsrAverage = 0;
   float humanResistance = 0.0;
   long sum = 0;
+  unsigned long lastAttempt = 0;
   for (int i = 0; i < 10; i++)
   {
     sensorValue = analogRead(GSRSonde);
     sum += sensorValue;
-
-    delay(5);
+    if (millis() - lastAttempt > 5)
+    {
+      lastAttempt = millis();
+    }
+    // delay(5); i   vTaskDelay(5/ portTICK_PERIOD_MS); ali radi samo ako se podele taskovi
   }
   gsrAverage = sum / 10;
   // konverzija sa 12 bit na 10 bit
@@ -42,7 +73,7 @@ int readGSR(int baseline)
   {
     humanResistance = 0;
   }
-  
+
   Serial.print("GSR prosek ");
   Serial.println(gsr_10bit);
 
@@ -50,6 +81,3 @@ int readGSR(int baseline)
   Serial.println(humanResistance);
   return gsr_10bit;
 }
-
-
-

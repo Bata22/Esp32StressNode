@@ -5,6 +5,7 @@
 
 // GPIO where the DS18B20 is connected to
 const int oneWireBus = PIN;
+int8_t connectedDs18b20;
 
 // Setup a oneWire instance to communicate with any OneWire devices
 OneWire oneWire(oneWireBus);
@@ -24,6 +25,12 @@ float temperatureDS18B20()
     float temperatureF = sensors.getTempFByIndex(0);
     Serial.print(temperatureC);
     Serial.println("ºC");
-    
+    if (temperatureC > 20 && temperatureC < 40)
+    {
+        connectedDs18b20 = 1;
+    }
+    else {
+        connectedDs18b20 = 0;
+    }
     return temperatureC;
 }
