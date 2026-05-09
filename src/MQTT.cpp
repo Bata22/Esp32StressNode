@@ -8,6 +8,8 @@ PubSubClient client(espClient);
 const char *mqtt_server = MQTTSERVER;
 const uint16_t mqtt_port = MQTTPORT;
 
+unsigned long lastAttempt = 0;
+
 void initMqtt()
 {
     client.setServer(mqtt_server, mqtt_port);
@@ -35,7 +37,10 @@ void reconnectMqtt()
             Serial.print("Ne uspesno, rc=");
             Serial.print(client.state());
             Serial.println(" pokusava ponovo...");
-            delay(3000);
+            if (millis() - lastAttempt > 3000)
+            {
+                lastAttempt = millis();
+            }
         }
     }
 }

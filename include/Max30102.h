@@ -1,7 +1,7 @@
 
 #include <stdint.h>
 
-
+extern int8_t connectedMax30102;
 struct HeartRateSensor {
     int32_t heartRate; 
     int8_t validHeartRate; 
