@@ -36,7 +36,7 @@ int calibrateGSR() // for 30 s on 5ms sample
       sensorValue = analogRead(GSRSonde);
       // printf("sensorValue %d", sensorValue); Check what value you get from sensors
       sum += sensorValue;
-
+      yield();
       delay(5);
     }
   }

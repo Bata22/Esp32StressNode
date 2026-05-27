@@ -26,7 +26,7 @@ void initMAXSensor()
     sensorLib.setPulseAmplitudeGreen(0);
     sensorLib.enableDIETEMPRDY();
 }
-HeartRateSensor heart_and_spo2_sensor()
+HeartRateSensor heart_and_spo2_sensor(bool (*mqttLoop)())
 {
     for (byte i = 0; i < 100; i++)
     {
@@ -36,6 +36,7 @@ HeartRateSensor heart_and_spo2_sensor()
         redBuffer[i] = sensorLib.getRed();
         irBuffer[i] = sensorLib.getIR();
         sensorLib.nextSample();
+        mqttLoop();
     }
 
     maxim_heart_rate_and_oxygen_saturation(irBuffer, 100, redBuffer, &sensor.spo2, &sensor.validSpo2, &sensor.heartRate, &sensor.validHeartRate);
