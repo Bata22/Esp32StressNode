@@ -9,7 +9,7 @@ struct HeartRateSensor {
     int8_t validSpo2;
 };
 
-HeartRateSensor heart_and_spo2_sensor();
+HeartRateSensor heart_and_spo2_sensor(bool (*mqttLoop)());
 void initMAXSensor();
  
 

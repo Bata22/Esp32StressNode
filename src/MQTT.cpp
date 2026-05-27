@@ -14,6 +14,10 @@ void initMqtt()
 {
     client.setServer(mqtt_server, mqtt_port);
 }
+bool mqttLoop()
+{
+    return client.loop();
+}
 
 void connectMqtt()
 {
@@ -47,9 +51,9 @@ void reconnectMqtt()
 // NAJVISE MI MIRISE DA OVO JEBE PROGRAM
 void publishNode(String nodePayload)
 {
-    client.publish("api/V1/esp32/node", nodePayload.c_str());
-    if (!client.publish("api/V1/esp32/node", nodePayload.c_str()))
+    bool success = client.publish("api/v1/esp32/node", nodePayload.c_str());
+    if (!success)
     {
-        Serial.println("Publish failed");
+        Serial.print("Publish failed");
     }
 }
