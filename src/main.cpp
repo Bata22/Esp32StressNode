@@ -11,13 +11,14 @@
 
 time_t now;
 HeartRateSensor resultsMax;
-uint8_t publishFlag = 0;
+// uint8_t publishFlag = 0;
 int baseline;
 int GSR;
 float temperatureC_DS10B20;
 String payloadJson;
 
 void setup()
+
 {
   Serial.begin(115200);
   setup_wifi();
@@ -26,7 +27,7 @@ void setup()
   initMAXSensor(); // hr and spo2 sensor
   initDS18B20();
   initMqtt();
-  publishFlag = 1;
+  // publishFlag = 1;
 }
 
 void loop()
@@ -65,8 +66,10 @@ void loop()
 
   // }
   payloadJson = NodePayload(now, resultsMax.heartRate, resultsMax.spo2, resultsMax.validHeartRate, resultsMax.validSpo2, connectedMax30102, GSR, conncetedGSR, temperatureC_DS10B20, connectedDs18b20);
-  if (publishFlag == 1)
-  {
-    publishNode(payloadJson);
-  }
+   publishNode(payloadJson);
+  // if (publishFlag == 1)
+  // {
+   
+    
+  // }
 }

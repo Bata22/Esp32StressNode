@@ -2,10 +2,9 @@
 #include <Wifi.h>
 #include "Credentials.h"
 #include "WifiMine.h"
-
 IPAddress staticIP(IPADDRESS);
-IPAddress gateway(SUBNET);
-IPAddress subnet(GATEWAY);
+IPAddress gateway(GATEWAY);
+IPAddress subnet(SUBNET);
 
 void setup_wifi()
 {
@@ -24,8 +23,10 @@ void setup_wifi()
     {
         delay(500);
         Serial.print(".");
+        // Serial.println(WiFi.status()); 
+        // Serial.print(WiFi.RSSI());  Cheks signals
     }
-
+    Serial.println(WiFi.status());
     Serial.println("\nWifi povezan!");
     Serial.print("IP: ");
     Serial.println(WiFi.localIP());
