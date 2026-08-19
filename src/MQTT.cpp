@@ -44,6 +44,7 @@ void reconnectMqtt()
             if (millis() - lastAttempt > 3000)
             {
                 lastAttempt = millis();
+                // client.connect("ESP32_KAPIJA");
             }
         }
     }

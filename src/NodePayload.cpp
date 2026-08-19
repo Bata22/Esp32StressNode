@@ -4,7 +4,7 @@
 String NodePayload(time_t now, int heartRate, int spo2,int8_t validHeartRate, int8_t validSpo2, int8_t connectedMax30102, int gsr, int8_t connectedGSR, float temperatureC, int8_t connectedDs18b20)
 {
     JsonDocument jsonDoc; // StaticJsonDocument<200>
-    // TODO: dynamic NODEID when i have more nodes
+    // TODO: dynamic NODEID via pi4 when i have more nodes
     jsonDoc["NodeID"] = "01-ESP32";
     // TODO: NTP sync when gateway available
     jsonDoc["TimeStamp"] = (uint32_t)now;
