@@ -2,9 +2,12 @@
 #include <PubSubClient.h>
 #include "Credentials.h"
 #include "MQTT.h"
+#include "SystemInfo.h"
+//TODO: ADD account and ttl encripiton for comunication
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+String myId = "";
 const char *mqtt_server = MQTTSERVER;
 const uint16_t mqtt_port = MQTTPORT;
 
@@ -31,10 +34,16 @@ void reconnectMqtt()
 {
     while (!client.connected())
     {
+        myId = getUniqeNodeId(); // nodeId mac address
         Serial.print("Pokusaj za MQTT povezivanjem...");
-        if (client.connect("ESP32_KAPIJA"))
+        Serial.println(myId);
+
+        String statusTopic = "api/v1/esp32"+ myId + "/status";
+
+        if (client.connect(myId.c_str(), statusTopic.c_str(), 0, true, "offline"))
         {
             Serial.println("Povezan!");
+            client.publish(statusTopic.c_str(), "online", true);
         }
         else
         {
@@ -52,9 +61,15 @@ void reconnectMqtt()
 // NAJVISE MI MIRISE DA OVO JEBE PROGRAM
 void publishNode(String nodePayload)
 {
-    bool success = client.publish("api/v1/esp32/node", nodePayload.c_str());
+
+    if (!client.connected()){
+        return;
+    }
+    
+    String dynamicTopic = "api/v1/esp32" + myId + "/telemetry";
+    bool success = client.publish(dynamicTopic.c_str(), nodePayload.c_str());
     if (!success)
     {
-        Serial.print("Publish failed");
+        Serial.print("Publish telemetry failed");
     }
 }
