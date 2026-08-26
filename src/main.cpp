@@ -8,6 +8,7 @@
 #include "NodePayload.h"
 #include "WifiMine.h"
 #include "MQTT.h"
+#include "SystemInfo.h"
 
 time_t now;
 HeartRateSensor resultsMax;
@@ -16,11 +17,15 @@ int baseline;
 int GSR;
 float temperatureC_DS10B20;
 String payloadJson;
+String nodeId = "";
 
 void setup()
 
 {
   Serial.begin(115200);
+  nodeId = getUniqeNodeId();
+  Serial.print("Uredjaj je pokrenut ID: ");
+  Serial.println(nodeId);
   setup_wifi();
   baseline = calibrateGSR();
   Serial.println("Initializing...");
@@ -32,6 +37,7 @@ void setup()
 
 void loop()
 {
+
   // Set Timestamp
   now = time(NULL);
   connectMqtt();
@@ -65,7 +71,7 @@ void loop()
   // {
 
   // }
-  payloadJson = NodePayload(now, resultsMax.heartRate, resultsMax.spo2, resultsMax.validHeartRate, resultsMax.validSpo2, connectedMax30102, GSR, conncetedGSR, temperatureC_DS10B20, connectedDs18b20);
+  payloadJson = NodePayload(nodeId,now, resultsMax.heartRate, resultsMax.spo2, resultsMax.validHeartRate, resultsMax.validSpo2, connectedMax30102, GSR, conncetedGSR, temperatureC_DS10B20, connectedDs18b20);
    publishNode(payloadJson);
   // if (publishFlag == 1)
   // {
