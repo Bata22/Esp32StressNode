@@ -3,6 +3,7 @@
 #include "Credentials.h"
 #include "MQTT.h"
 #include "SystemInfo.h"
+//TODO: ADD account and ttl encripiton for comunication
 WiFiClient espClient;
 PubSubClient client(espClient);
 
