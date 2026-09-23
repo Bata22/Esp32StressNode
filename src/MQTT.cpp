@@ -16,6 +16,7 @@ unsigned long lastAttempt = 0;
 void initMqtt()
 {
     client.setServer(mqtt_server, mqtt_port);
+    client.setBufferSize(512);
 }
 bool mqttLoop()
 {
@@ -38,7 +39,7 @@ void reconnectMqtt()
         Serial.print("Pokusaj za MQTT povezivanjem...");
         Serial.println(myId);
 
-        String statusTopic = "api/v1/esp32"+ myId + "/status";
+        String statusTopic = "api/v1/esp32/"+ myId + "/status";
 
         if (client.connect(myId.c_str(), statusTopic.c_str(), 0, true, "offline"))
         {
@@ -66,7 +67,7 @@ void publishNode(String nodePayload)
         return;
     }
     
-    String dynamicTopic = "api/v1/esp32" + myId + "/telemetry";
+    String dynamicTopic = "api/v1/esp32/" + myId + "/telemetry";
     bool success = client.publish(dynamicTopic.c_str(), nodePayload.c_str());
     if (!success)
     {
