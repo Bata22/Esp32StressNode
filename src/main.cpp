@@ -63,7 +63,7 @@ void loop()
     Serial.println(resultsMax.validHeartRate);
   }
   delay(500);
-  GSR = readGSR(baseline);
+  GSR = readGSR();
   delay(100);
   temperatureC_DS10B20 = temperatureDS18B20();
   // TODO: ADD json payload
