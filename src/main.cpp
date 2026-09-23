@@ -27,11 +27,12 @@ void setup()
   Serial.print("Uredjaj je pokrenut ID: ");
   Serial.println(nodeId);
   setup_wifi();
-  baseline = calibrateGSR();
   Serial.println("Initializing...");
   initMAXSensor(); // hr and spo2 sensor
   initDS18B20();
   initMqtt();
+  connectMqtt();
+  publishCalibrationGsr(baseline);
   // publishFlag = 1;
 }
 

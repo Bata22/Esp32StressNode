@@ -59,7 +59,7 @@ void reconnectMqtt()
         }
     }
 }
-// NAJVISE MI MIRISE DA OVO JEBE PROGRAM
+
 void publishNode(String nodePayload)
 {
 
@@ -73,4 +73,12 @@ void publishNode(String nodePayload)
     {
         Serial.print("Publish telemetry failed");
     }
+}
+
+void publishCalibrationGsr(int baseline)
+{
+    if (!client.connected()) return;
+    String topic = "api/v1/esp32/"+myId+ "/calibration";
+    String payload = "{\"gsr_baseline\":"+ String(baseline) + "}";
+    client.publish(topic.c_str(), payload.c_str(), true); //ostaje uvek true
 }
