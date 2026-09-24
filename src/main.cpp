@@ -18,6 +18,24 @@ int GSR;
 float temperatureC_DS10B20;
 String payloadJson;
 String nodeId = "";
+int gsrArray[20];
+int gsrCount = 0;
+uint32_t seq = 0;
+unsigned long lastGsrTime = 0;
+bool sampleTick()
+{
+  mqttLoop();
+  if (millis() - lastGsrTime > 250)
+  {
+    lastGsrTime = millis();
+    if (gsrCount < 20)
+    {
+      gsrArray[gsrCount] = readGSR();
+      gsrCount++;
+    }
+  }
+  return true;
+}
 
 void setup()
 
@@ -27,6 +45,7 @@ void setup()
   Serial.print("Uredjaj je pokrenut ID: ");
   Serial.println(nodeId);
   setup_wifi();
+  baseline = calibrateGSR();
   Serial.println("Initializing...");
   initMAXSensor(); // hr and spo2 sensor
   initDS18B20();
@@ -39,13 +58,12 @@ void setup()
 void loop()
 {
 
-  // Set Timestamp
-  now = time(NULL);
   connectMqtt();
-  
+
   unsigned long MaxTrajanje = millis();
   // Monitoring HR and spo2 max
-  resultsMax = heart_and_spo2_sensor(mqttLoop);
+  gsrCount = 0;
+  resultsMax = heart_and_spo2_sensor(sampleTick);
   Serial.print(millis() - MaxTrajanje);
   // Print results
   if (resultsMax.spo2 > 70 && resultsMax.validSpo2 == 1)
@@ -63,20 +81,19 @@ void loop()
     Serial.print(" |Valid= ");
     Serial.println(resultsMax.validHeartRate);
   }
-  delay(500);
-  GSR = readGSR();
-  delay(100);
+  // delay(500);
+  // GSR = readGSR();
+  // delay(100);
   temperatureC_DS10B20 = temperatureDS18B20();
   // TODO: ADD json payload
   // if (resultsMax.validHeartRate == 1 && resultsMax.validSpo2 == 1 && resultsMax.heartRate > 40 && resultsMax.spo2 > 70)
   // {
 
   // }
-  payloadJson = NodePayload(nodeId,now, resultsMax.heartRate, resultsMax.spo2, resultsMax.validHeartRate, resultsMax.validSpo2, connectedMax30102, GSR, conncetedGSR, temperatureC_DS10B20, connectedDs18b20);
-   publishNode(payloadJson);
+  payloadJson = NodePayload(seq++, millis(), resultsMax.heartRate, resultsMax.validHeartRate, resultsMax.spo2, resultsMax.validSpo2, gsrArray, gsrCount, temperatureC_DS10B20, connectedMax30102, conncetedGSR, connectedDs18b20);
+  publishNode(payloadJson);
   // if (publishFlag == 1)
   // {
-   
-    
+
   // }
 }

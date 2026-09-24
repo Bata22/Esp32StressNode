@@ -1,28 +1,29 @@
 #include <ArduinoJson.h>
-#include <time.h>
 #include "NodePayload.h"
-String NodePayload(String nodeId,time_t now, int heartRate, int spo2,int8_t validHeartRate, int8_t validSpo2, int8_t connectedMax30102, int gsr, int8_t connectedGSR, float temperatureC, int8_t connectedDs18b20)
+String NodePayload(uint32_t seq, uint32_t nodeMs, int heartRate, int8_t validHeartRate, int spo2, int8_t validSpo2, int gsr[], int gsrCount, float temperatureC,int8_t connectedMax30102, int8_t connectedGSR, int8_t connectedDs18b20)
 {
-    JsonDocument jsonDoc; // StaticJsonDocument<200>
-    // TODO: dynamic NODEID via pi4 when i have more nodes
-    jsonDoc["NodeID"] = nodeId;
+    JsonDocument jsonDoc;
+
+    jsonDoc["fw"] = PAYLOAD_FORMAT;
+    jsonDoc["seq"] = seq;
+    jsonDoc["node_ms"] = nodeMs;
+
     // TODO: NTP sync when gateway available
-    jsonDoc["TimeStamp"] = (uint32_t)now;
     JsonObject sensorData = jsonDoc["sensorData"].to<JsonObject>();
     sensorData["HeartRate"] = heartRate;
+    sensorData["heartRateValid"] = validHeartRate;
     sensorData["SpO2"] = spo2;
-    sensorData["GSR"] = gsr;
-    sensorData["Temperature"] = temperatureC;
-
-    if (connectedMax30102 == 1 && connectedGSR == 1 && connectedDs18b20 == 1 && validHeartRate == 1 && validSpo2 == 1 )
+    sensorData["Spo2Valid"] = validSpo2;
+    JsonArray gsrArr = sensorData["GSR"].to<JsonArray>();
+    for (int i = 0; i < gsrCount; i++)
     {
-        jsonDoc["ErrorMessage"] = "RADI";
-    }else
-    {
-        String error = "MaxConecctionValue " + String(connectedMax30102) + " Valid HR  "+ String(validHeartRate) + " Valid Sp02"+ String(validSpo2) + " , GSRConnectionValue" + String(connectedGSR) + " , Ds18b20ConnectionValue" + String(connectedDs18b20);
-        jsonDoc["ErrorMessage"] = error ;
+        gsrArr.add(gsr[i]);
     }
-
+    sensorData["Temperature"] = temperatureC;
+    JsonObject sensorsOk = jsonDoc["sensors_ok"].to<JsonObject>();
+    sensorsOk["max"] = connectedMax30102;
+    sensorsOk["gsr"] = connectedGSR;
+    sensorsOk["temp"] = connectedDs18b20;
     String response;
     serializeJson(jsonDoc, response);
 

@@ -33,6 +33,7 @@ void connectMqtt()
 }
 void reconnectMqtt()
 {
+    Serial.printf("[DIAG] MQTT pao : state= %d wifi= %d rssi = %d dBm\n", client.state(), WiFi.status(), WiFi.RSSI());
     while (!client.connected())
     {
         myId = getUniqeNodeId(); // nodeId mac address

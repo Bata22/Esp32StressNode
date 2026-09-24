@@ -12,14 +12,14 @@ int calibrateGSR() // for 30 s on 5ms sample
     sensorValue = analogRead(GSRSonde);
     sensorValueArray[i] = sensorValue;
   }
-  for (byte i = 0 ; i < 19; i++)
+  for (byte i = 0; i < 19; i++)
   {
     if (sensorValueArray[i] == 0)
     {
       conncetedGSR = 0;
       break;
     }
-    if ((sensorValueArray[i + 1]) - sensorValueArray[i] > 400)
+    if (abs(sensorValueArray[i + 1] - sensorValueArray[i]) > 1600)
     {
       conncetedGSR = 0;
       break;
@@ -52,10 +52,8 @@ int readGSR()
   {
     sensorValue = analogRead(GSRSonde);
     sum += sensorValue;
-    
   }
   gsrAverage = sum / 10;
-  
- 
+
   return gsrAverage;
 }
