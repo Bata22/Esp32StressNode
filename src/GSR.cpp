@@ -12,14 +12,14 @@ int calibrateGSR() // for 30 s on 5ms sample
     sensorValue = analogRead(GSRSonde);
     sensorValueArray[i] = sensorValue;
   }
-  for (byte i = 0 ; i < 19; i++)
+  for (byte i = 0; i < 19; i++)
   {
-    if (sensorValue == 0)
+    if (sensorValueArray[i] == 0)
     {
       conncetedGSR = 0;
       break;
     }
-    if ((sensorValueArray[i + 1]) - sensorValueArray[i] > 400)
+    if (abs(sensorValueArray[i + 1] - sensorValueArray[i]) > 1600)
     {
       conncetedGSR = 0;
       break;
@@ -43,41 +43,17 @@ int calibrateGSR() // for 30 s on 5ms sample
   return sum / 6000;
 }
 
-int readGSR(int baseline)
+int readGSR()
 {
   int sensorValue = 0;
   int gsrAverage = 0;
-  float humanResistance = 0.0;
   long sum = 0;
-  unsigned long lastAttempt = 0;
   for (int i = 0; i < 10; i++)
   {
     sensorValue = analogRead(GSRSonde);
     sum += sensorValue;
-    if (millis() - lastAttempt > 5)
-    {
-      lastAttempt = millis();
-    }
-    // delay(5); i   vTaskDelay(5/ portTICK_PERIOD_MS); ali radi samo ako se podele taskovi
   }
   gsrAverage = sum / 10;
-  // konverzija sa 12 bit na 10 bit
-  int gsr_10bit = map(gsrAverage, 0, 4095, 0, 1023);
-  float numerator = (1024 + 2 * gsr_10bit) * 10000.0;
-  float denominator = baseline - gsr_10bit;
-  if (denominator != 0)
-  {
-    humanResistance = numerator / denominator;
-  }
-  else
-  {
-    humanResistance = 0;
-  }
 
-  Serial.print("GSR prosek ");
-  Serial.println(gsr_10bit);
-
-  Serial.print("Covekova otpornost ");
-  Serial.println(humanResistance);
-  return gsr_10bit;
+  return gsrAverage;
 }

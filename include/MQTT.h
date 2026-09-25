@@ -4,3 +4,4 @@ bool mqttLoop();
 void connectMqtt();
 void reconnectMqtt();
 void publishNode(String nodePayload);
+void publishCalibrationGsr(int baseline);

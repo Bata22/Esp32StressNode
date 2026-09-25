@@ -16,6 +16,7 @@ unsigned long lastAttempt = 0;
 void initMqtt()
 {
     client.setServer(mqtt_server, mqtt_port);
+    client.setBufferSize(512);
 }
 bool mqttLoop()
 {
@@ -32,13 +33,14 @@ void connectMqtt()
 }
 void reconnectMqtt()
 {
+    Serial.printf("[DIAG] MQTT pao : state= %d wifi= %d rssi = %d dBm  heap = %d maxAllocHeap = %d\n", client.state(), WiFi.status(), WiFi.RSSI(), ESP.getFreeHeap(), ESP.getMaxAllocHeap());
     while (!client.connected())
     {
         myId = getUniqeNodeId(); // nodeId mac address
         Serial.print("Pokusaj za MQTT povezivanjem...");
         Serial.println(myId);
 
-        String statusTopic = "api/v1/esp32"+ myId + "/status";
+        String statusTopic = "api/v1/esp32/"+ myId + "/status";
 
         if (client.connect(myId.c_str(), statusTopic.c_str(), 0, true, "offline"))
         {
@@ -58,7 +60,7 @@ void reconnectMqtt()
         }
     }
 }
-// NAJVISE MI MIRISE DA OVO JEBE PROGRAM
+
 void publishNode(String nodePayload)
 {
 
@@ -66,10 +68,18 @@ void publishNode(String nodePayload)
         return;
     }
     
-    String dynamicTopic = "api/v1/esp32" + myId + "/telemetry";
+    String dynamicTopic = "api/v1/esp32/" + myId + "/telemetry";
     bool success = client.publish(dynamicTopic.c_str(), nodePayload.c_str());
     if (!success)
     {
         Serial.print("Publish telemetry failed");
     }
+}
+
+void publishCalibrationGsr(int baseline)
+{
+    if (!client.connected()) return;
+    String topic = "api/v1/esp32/"+myId+ "/calibration";
+    String payload = "{\"gsr_baseline\":"+ String(baseline) + "}";
+    client.publish(topic.c_str(), payload.c_str(), true); //ostaje uvek true
 }
