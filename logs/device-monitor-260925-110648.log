@@ -1,0 +1,113 @@
+11:06:48.004 > _drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+11:06:48.005 > mode:DIO, clock div:2
+11:06:48.009 > load:0x3fff0030,len:1184
+11:06:48.011 > load:0x40078000,len:13232
+11:06:48.014 > load:0x40080400,len:3028
+11:06:48.015 > entry 0x400805e4
+11:06:48.369 > Uredjaj je pokrenut ID: ESP32_BCCBC620691C
+11:06:48.378 > Povezivanje na wifi... 
+11:06:48.974 > ..................................................3
+11:07:13.475 > 
+11:07:13.475 > Wifi povezan!
+11:07:13.475 > IP: 192.168.0.37
+11:07:43.478 > Initializing...
+11:07:43.573 > [DIAG] MQTT pao : state= -1 wifi= 3 rssi = -89 dBm  heap = 251592 maxAllocHeap = 110580
+11:07:43.579 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:07:44.115 > Povezan!
+11:07:49.085 > 496724.75ºC
+11:07:54.149 > 497024.75ºC
+11:07:59.212 > 496924.75ºC
+11:08:04.276 > 497424.75ºC
+11:08:09.340 > 497424.75ºC
+11:08:14.404 > 497424.75ºC
+11:08:14.494 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -92 dBm  heap = 250872 maxAllocHeap = 110580
+11:08:14.499 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:08:14.554 > Povezan!
+11:08:19.507 > 495124.75ºC
+11:08:24.571 > 497224.75ºC
+11:08:29.635 > 497424.75ºC
+11:08:34.698 > 497324.75ºC
+11:08:39.762 > 497424.75ºC
+11:08:39.854 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -94 dBm  heap = 247544 maxAllocHeap = 110580
+11:08:39.859 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:08:40.431 > Povezan!
+11:08:45.384 > 495224.75ºC
+11:08:50.448 > 497024.81ºC
+11:08:55.513 > 497024.75ºC
+11:09:00.577 > 497424.75ºC
+11:09:05.641 > 497424.75ºC
+11:09:10.704 > 497324.75ºC
+11:09:10.795 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -88 dBm  heap = 244080 maxAllocHeap = 110580
+11:09:10.801 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:09:10.835 > Povezan!
+11:09:15.806 > 497024.81ºC
+11:09:20.871 > 497124.75ºC
+11:09:25.934 > 497124.81ºC
+11:09:30.999 > 497424.81ºC
+11:09:36.062 > 497424.81ºC
+11:09:41.128 > 497524.81ºC
+11:09:41.220 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -88 dBm  heap = 240688 maxAllocHeap = 110580
+11:09:41.225 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:09:41.258 > Povezan!
+11:09:46.211 > 495124.81ºC
+11:09:51.274 > 496924.75ºC
+11:09:56.338 > 497424.75ºC
+11:10:01.402 > 497424.75ºC
+11:10:06.465 > 497424.81ºC
+11:10:06.558 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -90 dBm  heap = 240688 maxAllocHeap = 110580
+11:10:06.564 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:09.575 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:09.578 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:12.581 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:12.584 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:15.585 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:15.591 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:18.589 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:18.592 > Pokusaj za MQTT povezivanjem...ESP32_BCCC620691C
+11:10:21.595 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:21.597 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:24.599 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:24.602 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:27.604 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:27.606 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:30.609 > Ne uspesno, rc=-2 pokusava ponovo...
+11:10:30.613 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:30.726 > Povezan!
+11:10:35.693 > 496624.81ºC
+11:10:40.757 > 497024.81ºC
+11:10:45.821 > 497424.81ºC
+11:10:50.886 > 497424.81ºC
+11:10:55.949 > 497424.81ºC
+11:10:56.041 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -90 dBm  heap = 240676 maxAllocHeap = 110580
+11:10:56.047 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:10:56.076 > Povezan!
+11:11:01.033 > 495524.81ºC
+11:11:06.096 > 497024.81ºC
+11:11:11.161 > 497124.75ºC
+11:11:16.225 > 497424.81ºC
+11:11:21.289 > 497424.81ºC
+11:11:26.353 > 497424.81ºC
+11:11:26.445 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -88 dBm  heap = 244068 maxAllocHeap = 110580
+11:11:26.450 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:11:26.480 > Povezan!
+11:11:31.436 > 495524.81ºC
+11:11:36.500 > 497024.81ºC
+11:11:41.565 > 497024.81ºC
+11:11:46.629 > 497424.81ºC
+11:11:51.693 > 497424.81ºC
+11:11:56.756 > 497424.81ºC
+11:11:56.848 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -89 dBm  heap = 244068 maxAllocHeap = 110580
+11:11:56.853 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:11:57.957 > Povezan!
+11:12:02.937 > 497924.75ºC
+11:12:08.000 > 497124.81ºC
+11:12:13.064 > 497324.81ºC
+11:12:18.128 > 497424.81ºC
+11:12:23.192 > 497424.81ºC
+11:12:23.284 > [DIAG] MQTT pao : state= -3 wifi= 3 rssi = -88 dBm  heap = 244176 maxAllocHeap = 110580
+11:12:23.289 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:12:26.303 > Ne uspesno, rc=-2 pokusava ponovo...
+11:12:26.306 > Pokusaj za MQTT povezivanjem...ESP32_BCCBC620691C
+11:12:26.367 > Povezan!
+11:12:31.324 > 495724.81ºC
+11:12:36.389 > 497124.81ºC

@@ -33,7 +33,7 @@ void connectMqtt()
 }
 void reconnectMqtt()
 {
-    Serial.printf("[DIAG] MQTT pao : state= %d wifi= %d rssi = %d dBm  heap = %d\n", client.state(), WiFi.status(), WiFi.RSSI(), ESP.getFreeHeap());
+    Serial.printf("[DIAG] MQTT pao : state= %d wifi= %d rssi = %d dBm  heap = %d maxAllocHeap = %d\n", client.state(), WiFi.status(), WiFi.RSSI(), ESP.getFreeHeap(), ESP.getMaxAllocHeap());
     while (!client.connected())
     {
         myId = getUniqeNodeId(); // nodeId mac address
