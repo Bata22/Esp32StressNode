@@ -3,9 +3,9 @@
 
 extern int8_t connectedMax30102;
 struct HeartRateSensor {
-    int32_t heartRate; 
+    int32_t heartRate;
+    int32_t spo2;  
     int8_t validHeartRate; 
-    int32_t spo2; 
     int8_t validSpo2;
 };
 
