@@ -18,8 +18,9 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from scipy.signal import find_peaks
+from config import FEATURES_CSV, DATA_DIR, WESAD_PATH
 
-WESAD_PATH = Path("./WESAD")
+
 
 FS_LABEL = 700  # Hz - labele su sinhronizovane na chest sampling rate
 FS_BVP = 64     # Hz
@@ -156,6 +157,7 @@ if __name__ == "__main__":
     print(f"\nUkupno prozora: {len(df)}")
     print(f"Distribucija labela:\n{df['label'].value_counts()}")
     print(f"\nBroj prozora po ispitaniku:\n{df.groupby('subject').size()}")
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    df.to_csv("wesad_features.csv", index=False)
-    print("\nSacuvano u wesad_features.csv")
+    df.to_csv(FEATURES_CSV, index=False)
+    print(f"\nSacuvano u {FEATURES_CSV}")

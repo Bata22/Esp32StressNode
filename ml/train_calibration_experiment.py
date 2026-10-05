@@ -13,9 +13,9 @@ ocenjuje ni u jednom uslovu. Na Pi-ju se tokom kalibracije ne predvidja,
 a sa istim test skupom za sve uslove razlika u metrikama dolazi samo od
 normalizacije, ne od toga koji su prozori ocenjeni.
 
-Hiperparametri su isti kao u train_final_models_all.py.
-Pokretanje: python train_calibration_experiment.py  (pored wesad_features.csv
-i normalization.py). Rezultat: results_calibration_experiment.csv
+
+Pokretanje: python train_calibration_experiment.py čita iz ml/data 
+i normalization.py. Rezultat: piše ml/results
 """
 
 import numpy as np
@@ -28,6 +28,7 @@ from sklearn.metrics import roc_auc_score, precision_score, recall_score, f1_sco
 from xgboost import XGBClassifier
 import sys, sklearn, xgboost
 
+from config import FEATURES_CSV,RESULTS_DIR
 from normalization import FEATURES, normalize_subject
 
 WINDOW_SEC = 5
@@ -64,7 +65,7 @@ def main():
     env_info = (f"Python {sys.version.split()[0]} | numpy {np.__version__} | "
             f"sklearn {sklearn.__version__} | xgboost {xgboost.__version__}")
     print(env_info)
-    df = pd.read_csv("wesad_features.csv")
+    df = pd.read_csv(FEATURES_CSV)
     if "window_idx" in df.columns:
         df = df.sort_values(["subject", "window_idx"])
     subjects = df["subject"].unique()
@@ -96,7 +97,8 @@ def main():
         print(f"Zavrsen uslov: {cond}")
 
     res = pd.DataFrame(results)
-    res.to_csv("results_calibration_experimentPython3.13.csv", index=False)
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    res.to_csv(RESULTS_DIR/"results_calibration_experiment.csv", index=False)
 
     summary = res.groupby(["model", "condition"])[["auc", "f1"]].agg(["mean", "std"]).round(3)
     order = list(CALIB_SECONDS)
