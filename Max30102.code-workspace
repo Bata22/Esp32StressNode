@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../01 Platformio blink esp32/blink_led"
+		},
+		{
+			"name": "Max30102",
+			"path": "."
+		},
+		{
+			"name": "Led Garaza",
+			"path": "C:/Users/juzna/Documents/PlatformIO/Projects/Led Garaza"
+		},
+		{
+			"name": "GarazaLED",
+			"path": "../../../FormulaDisplay]/GarazaLedSTM8/GarazaLED"
+		},
+		{
+			"path": "firmware"
+		}
+	],
+	"settings": {}
+}
